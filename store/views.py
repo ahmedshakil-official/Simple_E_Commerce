@@ -27,8 +27,10 @@ class CollectionDetailApiView(RetrieveUpdateDestroyAPIView):
 
 
 class ProductsApiView(ListCreateAPIView):
-    queryset = models.Product.objects.select_related('collection').all().order_by('id')
     serializer_class = serializers.ProductSerializer
+
+    def get_serializer_context(self):
+        return {"request": self.request}
 
 
 class ProductDetailApiView(RetrieveUpdateDestroyAPIView):
